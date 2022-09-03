@@ -2,7 +2,29 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <time.h>
+void configurarMatriz(int *numeroLinhas,int *numeroColunas){
+int dimensao;
+printf("Qual dimensao voce deseja para sua matriz:\n");
+printf("\n[0] Padrao 8-8; [1] Outra dimensao\n\n");
 
+scanf("%d",&dimensao);
+
+if( dimensao == 0 ){
+    *numeroLinhas = 8;
+    *numeroColunas = 8;
+    printf("Voce escolheu padrao a Matriz sera 8-8 \n\n\n");
+}else if ( dimensao == 1){
+printf("Quantas linhas voce deseja:\n");
+
+scanf("%d",numeroLinhas);
+printf("\nQuantas Colunas voce deseja:\n");
+scanf("%d",numeroColunas);
+
+printf("Voce escolheu a matriz personalizada a Matriz sera %d-%d :\n",*numeroLinhas,*numeroColunas);
+
+}
+
+}
 void printVetor(int* vetor,int tamanho)
 {
      int i;
@@ -138,11 +160,11 @@ void printMatriz(int** matriz,int numeroLinhas,int numeroColunas){
 
 int main (void){
 
-    int numeroLinhas = 8, numeroColunas = 8, iterator, iteratorSecundario;
+    int numeroLinhas, numeroColunas, iterator, iteratorSecundario;
     int **matriz;
     int popular;
 
-
+    configurarMatriz(&numeroLinhas,&numeroColunas);
     matriz = criarMatriz(numeroLinhas,numeroColunas);
 
     printf("Como deseja popular a Matriz:\n");
