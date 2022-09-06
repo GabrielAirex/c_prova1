@@ -2,10 +2,12 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <time.h>
+
+
 void configurarMatriz(int *numeroLinhas,int *numeroColunas){
 int dimensao;
 printf("Qual dimensao voce deseja para sua matriz:\n");
-printf("\n[0] Padrao 8-8; [1] Outra dimensao\n\n");
+printf("\n[0] Padrao 8-8 \n[1] Outra dimensao \n\n");
 
 scanf("%d",&dimensao);
 
@@ -25,15 +27,28 @@ printf("Voce escolheu a matriz personalizada a Matriz sera %d-%d :\n",*numeroLin
 }
 
 }
-void printVetor(int* vetor,int tamanho)
+void printVetor(int * vetor,int tamanho)
 {
-     int i;
-     for(i= 0; i< tamanho;i++){
-        printf(" %d ",vetor[i]);
+
+    printf("O resultado da leitura da matriz foi : \n\n\t");
+    for(int i = 0 ; i < tamanho ; i++){
+            printf("%d", vetor[i]);
     }
+    printf(".\n\n");
+
+    int i;
+    for(i = 0 ; i < tamanho ; i++){
+    if(i == 0){
+        printf("[ %d ", vetor[i]);
+    }else{
+          printf(",%d ", vetor[i]);
+    }
+
+   }
+    printf("] ");
 }
 
-void  printMatrizComoVetor(int** matriz,int numeroLinhas,int numeroColunas)
+int*  converter_matriz_para_vetor(int** matriz,int numeroLinhas,int numeroColunas)
 {
     int* vetorPrinter;
     int tamanho = numeroColunas * numeroLinhas;
@@ -42,7 +57,7 @@ void  printMatrizComoVetor(int** matriz,int numeroLinhas,int numeroColunas)
 
     int iterator,iteratorSecundario;
 
-    vetorPrinter = malloc( tamanho * sizeof(int) );
+    vetorPrinter = (int*) malloc( tamanho * sizeof(int) );
 
     for( iterator = 0 ; iterator < numeroLinhas ; iterator ++)
     {
@@ -51,15 +66,18 @@ void  printMatrizComoVetor(int** matriz,int numeroLinhas,int numeroColunas)
 
         {
 
-            vetorPrinter[iterator_vetor] = matriz[iterator][iteratorSecundario];
-            printf(" %d ",vetorPrinter[iterator_vetor]);
+           vetorPrinter[iterator_vetor] = matriz[iterator][iteratorSecundario];
+
+           iterator_vetor++;
         }
-        iterator_vetor++;
+
     }
 
+        return vetorPrinter;
+        //printVetor(*vetorPrinter,tamanho);
 
-        printVetor(*vetorPrinter,tamanho);
-        free(vetorPrinter);
+
+
 
 }
 
@@ -161,6 +179,7 @@ void printMatriz(int** matriz,int numeroLinhas,int numeroColunas){
 int main (void){
 
     int numeroLinhas, numeroColunas, iterator, iteratorSecundario;
+    int* vetor_convertido_da_matriz;
     int **matriz;
     int popular;
 
@@ -168,7 +187,7 @@ int main (void){
     matriz = criarMatriz(numeroLinhas,numeroColunas);
 
     printf("Como deseja popular a Matriz:\n");
-    printf("[0]: Manualmente; [1] Com seed aleatoria\n");
+    printf("[0]: Manualmente\n[1] Com seed aleatoria\n\n");
 
     scanf("%d", &popular);
 
@@ -186,7 +205,9 @@ int main (void){
     printMatriz(matriz,numeroLinhas,numeroColunas);
 
 
-    printMatrizComoVetor(matriz,numeroLinhas,numeroColunas);
+    vetor_convertido_da_matriz = converter_matriz_para_vetor(matriz,numeroLinhas,numeroColunas);
+
+    printVetor(vetor_convertido_da_matriz,numeroColunas*numeroLinhas);
 
 
     free(matriz[0]);
